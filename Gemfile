@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 group :development, :test do
   gem 'sqlite3'
+  gem 'pry-rails'
 end
 
 group :production do
