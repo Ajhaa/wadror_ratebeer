@@ -1,9 +1,11 @@
 module RatingAverage
-    extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-    def average_rating
-      scores = ratings.map { |r| r.score }
-      sum = scores.reduce(:+)
-      sum/ratings.count
+  def average_rating
+    return 0 if ratings.empty?
+
+    scores = ratings.map(&:score)
+    sum = scores.reduce(:+)
+    sum / ratings.count.to_f
   end
-end    
+end
