@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :username, uniqueness: true,
                        length: { minimum: 3, maximum: 30 }
 
-  validates :password, length: {minimum: 4},
+  validates :password, length: { minimum: 4 },
                        format: /(\S*[A-Z]\S*\d|\S*\d\S*[A-Z])/
 
   has_many :ratings, dependent: :destroy
