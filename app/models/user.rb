@@ -30,5 +30,4 @@ class User < ApplicationRecord
     style_ratings = ratings.map {|r| { style: r.beer.style, score: r.score}}
   end
 
-
 end
