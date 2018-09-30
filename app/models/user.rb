@@ -13,4 +13,22 @@ class User < ApplicationRecord
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
+
+  def favourite_beer
+    return nil if ratings.empty?
+
+    ratings.sort_by(&:score).last.beer
+  end
+
+  def favourite_style
+    return nil if ratings.empty?
+
+    beers.first.style
+  end
+
+  def style_ratings
+    style_ratings = ratings.map {|r| { style: r.beer.style, score: r.score}}
+  end
+
+
 end
