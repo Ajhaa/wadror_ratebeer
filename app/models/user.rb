@@ -17,7 +17,7 @@ class User < ApplicationRecord
   def favourite_beer
     return nil if ratings.empty?
 
-    ratings.sort_by(&:score).last.beer
+    ratings.max_by(&:score).beer
   end
 
   def favourite_style
@@ -27,7 +27,6 @@ class User < ApplicationRecord
   end
 
   def style_ratings
-    style_ratings = ratings.map {|r| { style: r.beer.style, score: r.score}}
+    ratings.map { |r| { style: r.beer.style, score: r.score } }
   end
-
 end
