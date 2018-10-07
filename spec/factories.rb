@@ -10,9 +10,14 @@ FactoryBot.define do
     year 2018
   end
 
+  factory :style do
+    name { "lager" }
+    description { "namimaiskis" }
+  end
+
   factory :beer do
     name { "lato" }
-    style { "lager" }
+    style
     brewery
   end
 

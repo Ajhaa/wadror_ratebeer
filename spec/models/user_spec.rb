@@ -77,21 +77,11 @@ RSpec.describe User, type: :model do
       beer = create_beer_with_rating({user: user}, 15)
       expect(user.favourite_style).to eq(beer.style)
     end
-
-   # it "returns favourite style with many ratings" do
-   #   create_beer_with_rating({user: user}, 25, "1")
-   #   create_beer_with_rating({user: user}, 15, "1")
-   #   create_beer_with_rating({user: user}, 23, "2")
-   #   create_beer_with_rating({user: user}, 21, "3")
-   #   create_beer_with_rating({user: user}, 30, "4")
-   #   create_beer_with_rating({user: user}, 30, "4")
-
-   #   expect(user.favourite_style).to eq("4")
-   # end
   end
 
-  def create_beer_with_rating(object, score, style="Lager")
-    beer = FactoryBot.create(:beer, style: style)
+  def create_beer_with_rating(object, score)
+
+    beer = FactoryBot.create(:beer)
     FactoryBot.create(:rating, beer: beer, score: score, user: object[:user] )
     beer
   end
