@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   delete 'signout', to: 'sessions#destroy'
   get 'clubs', to: 'beer_clubs#index'
   get 'places', to: 'places#index'
+  resources :places, only: [:index, :show]
   post 'places', to: 'places#search'
 
   resource :session, only: [:new, :create, :destroy]
