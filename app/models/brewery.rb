@@ -9,7 +9,7 @@ class Brewery < ApplicationRecord
                                    only_integer: true }
 
   scope :active, -> { where active: true }
-  scope :retired, -> { where active: [nil,false] }
+  scope :retired, -> { where active: [nil, false] }
 
   def print_report
     puts name
@@ -22,8 +22,8 @@ class Brewery < ApplicationRecord
     puts "changed year to #{year}"
   end
 
-  def self.top(n)
+  def self.top(number)
     sorted_by_rating = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
-    sorted_by_rating[0..(n-1)]
+    sorted_by_rating[0..(number - 1)]
   end
 end
