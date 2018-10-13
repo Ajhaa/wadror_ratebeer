@@ -1,12 +1,17 @@
-<p id="notice"><%= notice %></p>
 
-<h1><%= @user.username %> </h1>
+
+<h1>
+  <%= @user.username %>
+  <% if @user.closed  %>
+    <span class="badge badge-info">closed</span>
+  <% end %>
+</h1>
 
 <h3> Belongs to following clubs: </h3>
 
 <ul>
   <% @user.beer_clubs.each do |club| %>
-    <li> <%= link_to club.name, club %> </li>
+    <li> <%= link_to club.name, club%> </li>
   <% end %>
 </ul>
 <p>
@@ -19,12 +24,15 @@
   <% @user.ratings.each do |rating| %>
     <li> <%= rating %>
     <% if @user == current_user %>
-      <%= link_to 'delete', rating, method: :delete %></li>
+      <%= link_to 'delete', rating, method: :delete%></li>
     <% end %>
   <% end %>
 </ul>
-<% if @user == current_user %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<% if current_user&.admin %>
+  <%= link_to 'toggle closed', toggle_closed_user_path(@user.id), method: :post, class: 'btn btn-primary'%>
 <% end %>
-<%= link_to 'Back', users_path %>
+<% if @user == current_user %>
+  <%= link_to('Edit',  edit_user_path(@user), class:'btn btn-primary') %>  |
+  <%= link_to('Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger') %>   |
+<% end %>
+<%= link_to('Back',  users_path, class:'btn btn-primary') %>

@@ -29,4 +29,13 @@ class User < ApplicationRecord
   def style_ratings
     ratings.map { |r| { style: r.beer.style, score: r.score } }
   end
+
+  def name
+    username
+  end
+
+  def self.top(n)
+    users = User.all.sort_by{ |u| -(u.ratings.count || 0)}
+    users[0..(n-1)]
+  end
 end

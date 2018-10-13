@@ -14,6 +14,6 @@
   <% end %>
 
   <%= f.select :beer_id, options_from_collection_for_select(@beers, :id, :name, selected: @rating.beer_id) %>
-  score: <%= f.number_field :score %>
-  <%= f.submit %>
+  score: <%= f.number_field :score, class:'form-control' %>
+  <%= f.submit class:"btn btn-primary" %>
 <% end %>

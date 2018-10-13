@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 <h1><%= @style.name %> </h1>
 <p><%= @style.description %></p>
 
@@ -6,8 +6,8 @@
 
 <ul>
   <% @style.beers.each do |beer|%>
-    <li> <%= link_to beer.name, beer %></li>
+    <li> <%= link_to beer.name, beer%></li>
   <% end %>
 </ul>
-<%= link_to 'Edit', edit_style_path(@style) %> |
-<%= link_to 'Back', styles_path %>
+<%= edit_and_destroy_buttons(@style) %>  |
+<%= link_to('Back',  styles_path, class:'btn btn-primary') %>
