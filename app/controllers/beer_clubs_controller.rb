@@ -19,7 +19,9 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
   def show
-    if !current_user.beer_clubs.include? @beer_club
+    @applications = @beer_club.memberships.select { |m| m.confirmed == false }
+    @confirmed_users = @beer_club.memberships.select(&:confirmed).map(&:user)
+    if !current_user&.beer_clubs&.include? @beer_club
       @membership = Membership.new
       @membership.beer_club = @beer_club
       @membership.user = current_user
@@ -30,7 +32,11 @@ class BeerClubsController < ApplicationController
 
   # GET /beer_clubs/new
   def new
-    @beer_club = BeerClub.new
+    if current_user
+      @beer_club = BeerClub.new
+    else
+      redirect_to beer_clubs_path, notice: "must be logged in"
+    end
   end
 
   # GET /beer_clubs/1/edit
@@ -41,9 +47,13 @@ class BeerClubsController < ApplicationController
   # POST /beer_clubs.json
   def create
     @beer_club = BeerClub.new(beer_club_params)
+    @membership = Membership.new
+    @membership.beer_club = @beer_club
+    @membership.user = current_user
+    @membership.confirmed = true
 
     respond_to do |format|
-      if @beer_club.save
+      if @beer_club.save && @membership.save
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
         format.json { render :show, status: :created, location: @beer_club }
       else

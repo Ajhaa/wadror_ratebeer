@@ -26,6 +26,7 @@ class MembershipsController < ApplicationController
   # POST /memberships.json
   def create
     @membership = Membership.new(membership_params)
+    @membership.confirmed = false
     @membership.user_id = current_user.id
     respond_to do |format|
       if @membership.save
@@ -52,6 +53,12 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def confirm_membership
+    membership = Membership.find(params[:id])
+    membership.update_attribute :confirmed, (true)
+
+    redirect_to membership.beer_club, notice:"user confirmed"
+  end
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
