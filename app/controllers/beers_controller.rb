@@ -1,6 +1,7 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   before_action :set_breweries_and_styles, only: [:new, :edit, :create]
+  before_action :expire__beer_fragment, only: [:create, :update, :destroy]
 
   # GET /beers
   # GET /beers.json
@@ -93,7 +94,12 @@ class BeersController < ApplicationController
     @beer = Beer.find(params[:id])
   end
 
+  def expire__beer_fragment
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
+
   def beer_params
     params.require(:beer).permit(:name, :style_id, :brewery_id)
   end

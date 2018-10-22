@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include RatingAverage
-
+  extend TopN
   has_secure_password
 
   validates :username, uniqueness: true,
@@ -32,10 +32,5 @@ class User < ApplicationRecord
 
   def name
     username
-  end
-
-  def self.top(number)
-    users = User.all.sort_by{ |u| -(u.ratings.count || 0) }
-    users[0..(number - 1)]
   end
 end

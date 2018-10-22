@@ -21,6 +21,7 @@ class BeerClubsController < ApplicationController
   def show
     @applications = @beer_club.memberships.select { |m| m.confirmed == false }
     @confirmed_users = @beer_club.memberships.select(&:confirmed).map(&:user)
+
     if !current_user&.beer_clubs&.include? @beer_club
       @membership = Membership.new
       @membership.beer_club = @beer_club

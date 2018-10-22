@@ -55,10 +55,11 @@ class MembershipsController < ApplicationController
 
   def confirm_membership
     membership = Membership.find(params[:id])
-    membership.update_attribute :confirmed, (true)
+    membership.update_attribute :confirmed, true
 
-    redirect_to membership.beer_club, notice:"user confirmed"
+    redirect_to membership.beer_club, notice: "user confirmed"
   end
+
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
